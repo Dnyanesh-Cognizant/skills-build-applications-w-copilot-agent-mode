@@ -13,9 +13,10 @@
     "typescript": "^6.0.3"
   },
   "scripts": {
-    "start": "node dist/server.js",
+    "build": "tsc",
     "dev": "ts-node src/server.ts",
-    "build": "tsc"
+    "start": "node dist/server.js",
+    "seed": "ts-node src/scripts/seed.ts"
   },
   "main": "dist/server.js"
 }
