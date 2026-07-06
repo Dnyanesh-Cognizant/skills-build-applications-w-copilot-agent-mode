@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getApiUrl } from '../utils/api';
+
+const getApiUrl = (resource) => {
+  const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim().replace(/\s+/g, '-');
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/${resource}/`
+    : `http://localhost:8000/api/${resource}/`;
+};
 
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([]);
