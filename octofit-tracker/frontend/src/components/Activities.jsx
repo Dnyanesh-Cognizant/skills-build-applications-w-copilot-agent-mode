@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const getApiUrl = (resource) => {
+const getApiUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim().replace(/\s+/g, '-');
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev/api/${resource}/`
-    : `http://localhost:8000/api/${resource}/`;
+    ? `https://${codespaceName}-8000.app.github.dev/api/activities/`
+    : `http://localhost:8000/api/activities/`;
 };
 
 export default function Activities() {
