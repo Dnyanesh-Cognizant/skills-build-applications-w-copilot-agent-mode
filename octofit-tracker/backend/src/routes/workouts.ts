@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { Workout } from '../models/workout';
+import { defaultWorkouts } from '../data/seedData';
 
 const router = Router();
 
 router.get('/', async (_req, res) => {
-  const workouts = await Workout.find({});
-  res.json(workouts);
+  const existing = await Workout.find({});
+  if (existing.length === 0) {
+    const seeded = await Workout.insertMany(defaultWorkouts);
+    return res.json(seeded);
+  }
+  return res.json(existing);
 });
 
 router.post('/', async (req, res) => {
