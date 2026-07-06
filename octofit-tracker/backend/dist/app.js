@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PORT = exports.app = void 0;
+exports.getBaseUrl = exports.PORT = exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -17,17 +17,20 @@ const app = (0, express_1.default)();
 exports.app = app;
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8000;
 exports.PORT = PORT;
+const getBaseUrl = () => {
+    const codespaceName = process.env.CODESPACE_NAME;
+    return codespaceName
+        ? `https://${codespaceName}-8000.app.github.dev`
+        : `http://localhost:${PORT}`;
+};
+exports.getBaseUrl = getBaseUrl;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.get('/api/health', (_req, res) => {
-    const codespaceName = process.env.CODESPACE_NAME;
-    const baseUrl = codespaceName
-        ? `https://${codespaceName}-8000.app.github.dev`
-        : `http://localhost:${PORT}`;
     res.json({
         status: 'ok',
         message: 'OctoFit Tracker API is running',
-        baseUrl,
+        baseUrl: getBaseUrl(),
     });
 });
 app.use('/api/users', users_1.default);
